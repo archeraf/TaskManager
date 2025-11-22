@@ -1,0 +1,63 @@
+services:
+    api:
+     container_name: task-manager-api
+     build:
+      dockerfile: TaskManager.API/Dockerfile
+      context: .
+     ports:
+      - "5001:8080"
+     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=taskdb;Port=3306;Database=taskmanager;Uid=root;Pwd=root;
+     depends_on: 
+      task-manager-db:
+        condition: service_healthy
+     networks:
+     - task-manager-network
+     volumes:
+     - logs:/app/logs
+   
+    task-manager-db:
+      container_name: task-manager-db
+      image: mysql:8.0
+      environment:
+         MYSQL_ROOT_PASSWORD: root
+         MYSQL_DATABASE: taskmanager
+         MYSQL_USER: archer
+         MYSQL_PASSWORD: archer123
+      ports:
+            - "1200:3306"
+      volumes:
+      - task-manager-db-data:/var/lib/mysql
+      networks:
+        task-manager-network:
+         aliases:
+          - taskdb
+      healthcheck:
+       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+       interval: 5s
+       timeout: 10s
+       retries: 10
+
+    adminer:
+     image: adminer:latest
+     container_name: task-manager-adminer
+     restart: always
+     depends_on:
+      - task-manager-db 
+     ports:
+      - "8081:8080"
+     networks:
+      - task-manager-network # DEVE estar na mesma rede para se comunicar com o DB
+
+volumes:
+    task-manager-db-data:
+        driver: local
+    logs:
+        driver: local
+
+
+networks:
+  task-manager-network:
+    name: task-manager-network
+    driver: bridge
