@@ -48,7 +48,7 @@ services:
      ports:
       - "8081:8080"
      networks:
-      - task-manager-network # DEVE estar na mesma rede para se comunicar com o DB
+      - task-manager-network
 
 volumes:
     task-manager-db-data:
