@@ -3,13 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Polly;
 using Serilog;
-using TaskManager.Infrastructure.Context;
+using TaskManager.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

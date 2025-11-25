@@ -5,21 +5,21 @@ namespace TaskManager.Domain.Entities
     public class Project
     {
         public int Id { get; private set; }
-        public string Title { get; private set; }
+        public string Name { get; private set; }
         public string Description { get; private set; }
         public StatusEnum Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
         public DateTime? FinishedAt { get; private set; }
         public DateTime? StartedAt { get; private set; }
-        public virtual ICollection<Assignment> Assignments { get; private set; }
+        public virtual ICollection<Task> Assignments { get; private set; }
 
         #region Methods
-        public void Update(string title, string description, StatusEnum status)
+        public void Update(string name, string description, StatusEnum status)
         {
-            if (string.IsNullOrWhiteSpace(title))
+            if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException("Title cannot be null or empty.", nameof(title));
+                throw new ArgumentException("Title cannot be null or empty.", nameof(name));
             }
 
             if (string.IsNullOrWhiteSpace(description))
@@ -37,7 +37,7 @@ namespace TaskManager.Domain.Entities
                 StartedAt = DateTime.UtcNow;
             }
 
-            Title = title;
+            Name = name;
             Description = description;
             Status = status;
             UpdatedAt = DateTime.UtcNow;

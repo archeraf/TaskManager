@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManager.Domain.Entities;
 
-namespace TaskManager.Infrastructure.Context
+namespace TaskManager.Infrastructure.Persistence.Context
 {
     public class MySqlContext : DbContext
     {
@@ -15,7 +15,7 @@ namespace TaskManager.Infrastructure.Context
             modelBuilder.Entity<Project>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Title)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(200);
                 entity.Property(e => e.Description)
