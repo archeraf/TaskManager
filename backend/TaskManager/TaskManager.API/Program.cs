@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Polly;
 using Serilog;
+using TaskManager.Application.DependencyInjection;
 using TaskManager.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 
@@ -18,6 +18,8 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
 builder.Services.AddDbContext<MySqlContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

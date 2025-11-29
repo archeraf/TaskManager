@@ -12,7 +12,7 @@ namespace TaskManager.Domain.Entities
         public DateTime? UpdatedAt { get; private set; }
         public DateTime? FinishedAt { get; private set; }
         public DateTime? StartedAt { get; private set; }
-        public virtual ICollection<Task> Assignments { get; private set; }
+        public virtual ICollection<Activity> Activities { get; private set; }
 
         #region Methods
         public void Update(string name, string description, StatusEnum status)

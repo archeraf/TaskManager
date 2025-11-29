@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\ViewModel\" />
+    <Compile Remove="DTO\ViewModel\**" />
+    <EmbeddedResource Remove="DTO\ViewModel\**" />
+    <None Remove="DTO\ViewModel\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +17,10 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.Domain\TaskManager.Domain.csproj" />
   </ItemGroup>
 
 </Project>

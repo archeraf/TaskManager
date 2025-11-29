@@ -14,17 +14,16 @@ namespace TaskManager.Infrastructure.Persistence.Configuration
 
             builder.Property(p => p.Name)
                 .HasMaxLength(100)
-                .IsRequired(); // NOT NULL
+                .IsRequired();
 
             builder.Property(p => p.Description)
                 .HasMaxLength(500)
-                .IsRequired(false); // Nullable
+                .IsRequired(false);
 
             builder.Property(p => p.Status)
-                .IsRequired(); // NOT NULL
+                .IsRequired();
 
-            // 1 : N relationship between Project and Assignment
-            builder.HasMany(p => p.Assignments)
+            builder.HasMany(p => p.Activities)
                 .WithOne(t => t.Project)
                 .HasForeignKey(t => t.ProjectId)
                 .OnDelete(DeleteBehavior.Restrict);

@@ -8,6 +8,7 @@ namespace TaskManager.Infrastructure.Persistence.Context
         public MySqlContext(DbContextOptions<MySqlContext> options) : base(options) { }
 
         DbSet<Project> Projects { get; set; }
+        DbSet<Activity> Activities { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +29,22 @@ namespace TaskManager.Infrastructure.Persistence.Context
                 entity.Property(e => e.UpdatedAt);
                 entity.Property(e => e.FinishedAt);
                 entity.Property(e => e.StartedAt);
+            });
+
+            modelBuilder.Entity<Activity>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.ProjectId)
+                    .IsRequired();
+                entity.Property(e => e.UserId)
+                    .IsRequired();
+                entity.Property(e => e.AssignedAt)
+                    .IsRequired();
+                entity.Property(e => e.RemovedAt);
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.Activities)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
 

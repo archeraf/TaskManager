@@ -9,7 +9,6 @@ namespace TaskManager.Application.DTO.MapperProfile
     {
         public MapperProfile()
         {
-            // CreateMap<Source, Destination>();
             CreateMap<CreateProjectRequest, Project>();
             CreateMap<Project, ProjectResponse>();
         }
