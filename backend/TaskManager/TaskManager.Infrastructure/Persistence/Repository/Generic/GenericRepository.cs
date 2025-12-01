@@ -23,14 +23,19 @@ namespace TaskManager.Infrastructure.Persistence.Repository.Generic
 
         }
 
-        public async void Delete(int id)
+        public async Task DeleteByIdAsync(int id)
         {
-            var entity = _dbSet.Find(id);
+            var entity = await _dbSet.FindAsync(id);
             if (entity != null)
             {
                 _dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _dbSet.AnyAsync(e => EF.Property<int>(e, "Id") == id);
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
@@ -40,16 +45,18 @@ namespace TaskManager.Infrastructure.Persistence.Repository.Generic
             foreach (var item in includes)
                 query = query.Include(item);
 
-
-
             return await query.AsNoTracking().ToListAsync();
-
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);
             return entity;
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<T> Update(int id, T entity)
@@ -62,5 +69,7 @@ namespace TaskManager.Infrastructure.Persistence.Repository.Generic
             }
             return entity;
         }
+
+
     }
 }

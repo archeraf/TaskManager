@@ -32,67 +32,67 @@ namespace TaskManager.Domain.Entities
                 throw new ArgumentException("Invalid status value.", nameof(status));
             }
 
-            if (status == StatusEnum.InProgress && StartedAt == null)
+            if (status == StatusEnum.InProgress && this.StartedAt == null)
             {
-                StartedAt = DateTime.UtcNow;
+                this.StartedAt = DateTime.UtcNow;
             }
 
-            Name = name;
-            Description = description;
-            Status = status;
-            UpdatedAt = DateTime.UtcNow;
+            this.Name = name;
+            this.Description = description;
+            this.Status = status;
+            this.UpdatedAt = DateTime.UtcNow;
         }
 
         public void MarkAsFinished()
         {
-            if (Status == StatusEnum.Done)
+            if (this.Status == StatusEnum.Done)
             {
                 throw new InvalidOperationException("This project is already done.");
             }
-            else if (Status == StatusEnum.Cancelled)
+            else if (this.Status == StatusEnum.Cancelled)
             {
                 throw new InvalidOperationException("A cancelled project cannot be marked as done.");
             }
 
 
-            Status = StatusEnum.Done;
-            FinishedAt = DateTime.UtcNow;
-            UpdatedAt = DateTime.UtcNow;
+            this.Status = StatusEnum.Done;
+            this.FinishedAt = DateTime.UtcNow;
+            this.UpdatedAt = DateTime.UtcNow;
         }
 
         public void Start()
         {
-            if (Status == StatusEnum.InProgress)
+            if (this.Status == StatusEnum.InProgress)
             {
                 throw new InvalidOperationException("This project is already in progress.");
             }
-            else if (Status == StatusEnum.Done)
+            else if (this.Status == StatusEnum.Done)
             {
                 throw new InvalidOperationException("A done project cannot be started again.");
             }
-            else if (Status == StatusEnum.Cancelled)
+            else if (this.Status == StatusEnum.Cancelled)
             {
                 throw new InvalidOperationException("A cancelled project cannot be started.");
             }
 
-            Status = StatusEnum.InProgress;
-            StartedAt = DateTime.UtcNow;
-            UpdatedAt = DateTime.UtcNow;
+            this.Status = StatusEnum.InProgress;
+            this.StartedAt = DateTime.UtcNow;
+            this.UpdatedAt = DateTime.UtcNow;
         }
 
         public void Cancel()
         {
-            if (Status == StatusEnum.Cancelled)
+            if (this.Status == StatusEnum.Cancelled)
             {
                 throw new InvalidOperationException("This project is already cancelled.");
             }
-            else if (Status == StatusEnum.Done)
+            else if (this.Status == StatusEnum.Done)
             {
                 throw new InvalidOperationException("A done project cannot be cancelled.");
             }
 
-            Status = StatusEnum.Cancelled;
-            UpdatedAt = DateTime.UtcNow;
+            this.Status = StatusEnum.Cancelled;
+            this.UpdatedAt = DateTime.UtcNow;
         }
 
 

@@ -9,7 +9,14 @@ namespace TaskManager.Application.DTO.MapperProfile
     {
         public MapperProfile()
         {
+            //Create Project
             CreateMap<CreateProjectRequest, Project>();
+
+            //Update Project
+            CreateMap<UpdateProjectRequest, Project>().ForMember(dest => dest.Status,
+               opt => opt.MapFrom(src => src.Status)); ;
+
+            //Project Reponse
             CreateMap<Project, ProjectResponse>();
         }
 
