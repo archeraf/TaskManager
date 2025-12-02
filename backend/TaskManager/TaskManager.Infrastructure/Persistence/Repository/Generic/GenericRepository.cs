@@ -5,7 +5,7 @@ using TaskManager.Infrastructure.Persistence.Context;
 
 namespace TaskManager.Infrastructure.Persistence.Repository.Generic
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    internal class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly MySqlContext _context;
         private readonly DbSet<T> _dbSet;
@@ -59,7 +59,7 @@ namespace TaskManager.Infrastructure.Persistence.Repository.Generic
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<T> Update(int id, T entity)
+        public async Task<T> UpdateAsync(int id, T entity)
         {
             var existingEntity = await _dbSet.FindAsync(id);
             if (existingEntity != null)

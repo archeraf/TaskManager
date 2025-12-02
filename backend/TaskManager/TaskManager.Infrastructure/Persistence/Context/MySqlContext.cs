@@ -38,9 +38,9 @@ namespace TaskManager.Infrastructure.Persistence.Context
                     .IsRequired();
                 entity.Property(e => e.UserId)
                     .IsRequired();
-                entity.Property(e => e.AssignedAt)
+                entity.Property(e => e.CompletionDate)
                     .IsRequired();
-                entity.Property(e => e.RemovedAt);
+                entity.Property(e => e.CreatedAt);
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.Activities)
                     .HasForeignKey(d => d.ProjectId)

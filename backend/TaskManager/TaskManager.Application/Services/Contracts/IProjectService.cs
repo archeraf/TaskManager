@@ -9,7 +9,7 @@ namespace TaskManager.Application.Services.Contracts
         public Task<ProjectResponse?> CreateProjectAsync(CreateProjectRequest projectRequest);
         public Task<ProjectResponse?> GetProjectByIdAsync(int projectRequest);
         public Task<IEnumerable<ProjectResponse>> GetAllProjectsAsync();
-        public Task<ProjectResponse> UpdateProjectAsync(int projectId, CreateProjectRequest projectRequest);
+        public Task<ProjectResponse> UpdateProjectAsync(int projectId, UpdateProjectRequest projectRequest);
         public Task DeleteProjectByIdAsync(int projectId);
 
 

@@ -7,7 +7,7 @@ using TaskManager.Domain.Entities;
 
 namespace TaskManager.Application.Services
 {
-    public class ProjectService : IProjectService
+    internal class ProjectService : IProjectService
     {
 
         private readonly IGenericRepository<Project> _repository;
@@ -70,7 +70,7 @@ namespace TaskManager.Application.Services
             return await _repository.ExistsAsync(projectId);
         }
 
-        public async Task<ProjectResponse> UpdateProjectAsync(int projectId, CreateProjectRequest projectRequest)
+        public async Task<ProjectResponse> UpdateProjectAsync(int projectId, UpdateProjectRequest projectRequest)
         {
             if (projectRequest == null)
             {
@@ -79,7 +79,7 @@ namespace TaskManager.Application.Services
             var project = _mapper.Map<Project>(projectRequest);
             var updatedProject = await _repository.UpdateAsync(projectId, project);
 
-            return _mapper.Map<ProjectResponse?>(updatedProject);
+            return _mapper.Map<ProjectResponse>(updatedProject);
 
         }
     }
