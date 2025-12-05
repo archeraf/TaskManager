@@ -1,6 +1,8 @@
 ﻿namespace TaskManager.Application.DTO.Response
 {
-    public record ActivityReponse(
+    public record ActivityResponse(
+
+
         int Id,
         string Title,
         int ProjectId,
@@ -8,12 +10,12 @@
         string Description,
         string Priority,
         string Status,
+        string ProjectName,
+        string UserName,
+
 
         DateTimeOffset CreatedAt,
-        DateTimeOffset UpdatedAt,
-
-        DateTimeOffset? CompletionDate = null,
-        string? ProjectName = null,
-        string? UserName = null
+        DateTimeOffset? UpdatedAt,
+        DateTimeOffset? CompletionDate
     );
 }

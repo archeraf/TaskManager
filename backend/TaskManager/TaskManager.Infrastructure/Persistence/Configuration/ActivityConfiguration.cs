@@ -8,10 +8,13 @@ namespace TaskManager.Infrastructure.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Activity> builder)
         {
-            builder.ToTable("Activity");
+            builder.ToTable("Activities");
 
             builder.HasKey(e => e.Id);
-
+            builder.Property(e => e.ProjectId)
+                .IsRequired();
+            builder.Property(e => e.UserId)
+                .IsRequired();
             builder.Property(p => p.Title)
                 .HasMaxLength(25)
                 .IsRequired();
@@ -22,11 +25,15 @@ namespace TaskManager.Infrastructure.Persistence.Configuration
 
             builder.Property(p => p.Status)
                 .IsRequired();
+            builder.Property(e => e.CompletionDate)
+                .IsRequired();
+            builder.Property(e => e.CreatedAt);
 
-            builder.HasOne(a => a.Project)
+
+            builder.HasOne(d => d.Project)
                 .WithMany(p => p.Activities)
-                .HasForeignKey(t => t.ProjectId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(d => d.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

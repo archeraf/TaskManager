@@ -4,11 +4,9 @@ using TaskManager.Infrastructure.Persistence.Repository.Generic;
 
 namespace TaskManager.Infrastructure.DI
 {
-    internal class DependencyInjection
+    public static class DependencyInjection
     {
-        public DependencyInjection() { }
-
-        public IServiceCollection AddInfrastructure(IServiceCollection service)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection service)
         {
             service.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             return service;

@@ -13,11 +13,21 @@ namespace TaskManager.Application.DTO.MapperProfile
             CreateMap<CreateProjectRequest, Project>();
 
             //Update Project
-            CreateMap<UpdateProjectRequest, Project>().ForMember(dest => dest.Status,
+            CreateMap<UpdateProjectRequest, Project>()
+                .ForMember(dest => dest.Status,
                opt => opt.MapFrom(src => src.Status)); ;
 
             //Project Reponse
-            CreateMap<Project, ProjectResponse>();
+            CreateMap<Project, ProjectResponse>()
+                .ConstructUsing(src => new ProjectResponse(
+                    src.Id,
+                    src.Title,
+                    src.Status.ToString(),
+                    src.Description,
+                    src.Activities.Select(a => a.Id).ToArray()));
+
+            //Activity Reponse
+            CreateMap<Activity, ActivityResponse>();
         }
 
     }

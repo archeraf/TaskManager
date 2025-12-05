@@ -1,0 +1,1 @@
+insert into Users (id, Username, Email, PasswordHash) values (1, 'John','teste.com', '123456');

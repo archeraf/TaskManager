@@ -48,10 +48,12 @@ namespace TaskManager.Infrastructure.Persistence.Repository.Generic
             return await query.AsNoTracking().ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id, params Expression<Func<T, object>>[] includes)
         {
-            var entity = await _dbSet.FindAsync(id);
-            return entity;
+            IQueryable<T> query = _dbSet;
+            foreach (var item in includes)
+                query = query.Include(item);
+            return await query.AsNoTracking().FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == id);
         }
 
         public async Task<bool> SaveChangesAsync()

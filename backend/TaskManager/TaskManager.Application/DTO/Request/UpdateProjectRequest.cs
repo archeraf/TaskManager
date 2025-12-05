@@ -2,7 +2,7 @@
 {
     public record UpdateProjectRequest(
                 int Id,
-                string Name,
+                string Title,
                 string Description,
                 string Status,
                 int UserId,

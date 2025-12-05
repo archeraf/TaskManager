@@ -4,6 +4,7 @@ using MySqlConnector;
 using Polly;
 using Serilog;
 using TaskManager.Application.DependencyInjection;
+using TaskManager.Infrastructure.DI;
 using TaskManager.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<MySqlContext>(options => options.UseMySql(connecti
 
 
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 var app = builder.Build();
 

@@ -2,9 +2,9 @@
 {
     public record ProjectResponse(
                 int Id,
-                string Name,
+                string Title,
                 string Status,
                 string Description,
-                int TotalTarefas
+                int[] ActivitiesIds
                 );
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq.Expressions;
 using TaskManager.Application.DTO.Request;
 using TaskManager.Application.DTO.Response;
 using TaskManager.Application.Services.Contracts;
@@ -12,6 +13,8 @@ namespace TaskManager.Application.Services
 
         private readonly IGenericRepository<Project> _repository;
         private readonly IMapper _mapper;
+        private Expression<Func<Project, object>> _includeActivities = project => project.Activities;
+
 
         public ProjectService(IGenericRepository<Project> repository, IMapper mapper)
         {
@@ -22,7 +25,7 @@ namespace TaskManager.Application.Services
 
         public async Task<IEnumerable<ProjectResponse>> GetAllProjectsAsync()
         {
-            var projects = await _repository.GetAllAsync();
+            var projects = await _repository.GetAllAsync(_includeActivities);
             return _mapper.Map<IEnumerable<ProjectResponse>>(projects);
         }
 
@@ -30,7 +33,8 @@ namespace TaskManager.Application.Services
         {
             if (projectId == 0) throw new ArgumentException("Invalid project ID.", nameof(projectId));
 
-            var project = await _repository.GetByIdAsync(projectId);
+
+            var project = await _repository.GetByIdAsync(projectId, _includeActivities);
 
             return project == null ? null : _mapper.Map<ProjectResponse>(project);
 

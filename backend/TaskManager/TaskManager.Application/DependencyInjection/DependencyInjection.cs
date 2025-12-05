@@ -1,8 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using TaskManager.Application.DTO.MapperProfile;
 using TaskManager.Application.DTO.Request;
+using TaskManager.Application.Services;
+using TaskManager.Application.Services.Contracts;
+using TaskManager.Application.Validators;
 
 namespace TaskManager.Application.DependencyInjection
 {
@@ -13,7 +15,9 @@ namespace TaskManager.Application.DependencyInjection
         {
             service.AddFluentValidationAutoValidation()
                 .AddValidatorsFromAssemblyContaining<CreateProjectRequest>();
-            service.AddAutoMapper(typeof(MapperProfile).Assembly);
+
+            service.AddScoped<IValidator<CreateProjectRequest>, CreateProjectRequestValidator>();
+            service.AddScoped<IProjectService, ProjectService>();
             return service;
         }
     }
